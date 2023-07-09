@@ -146,7 +146,7 @@ class SelectTest extends TestCase
             ->where('users.id', '>', 10)
             ->get();
 
-        $this->assertEquals('SELECT * FROM users INNER JOIN comments ON comments.user_id = users.id INNER JOIN posts ON posts.user_id = users.id WHERE users.id > :users.id', $query->sql);
+        $this->assertEquals('SELECT * FROM users INNER JOIN comments ON comments.user_id = users.id INNER JOIN posts ON posts.user_id = users.id WHERE users.id > :usersid', $query->sql);
     }
 
     public function test_select_with_multiple_joins_and_multiple_where()
@@ -158,7 +158,7 @@ class SelectTest extends TestCase
             ->where('posts.id', '>', 10)
             ->get();
 
-        $this->assertEquals('SELECT * FROM users INNER JOIN comments ON comments.user_id = users.id INNER JOIN posts ON posts.user_id = users.id WHERE users.id > :users.id AND posts.id > :posts.id', $query->sql);
+        $this->assertEquals('SELECT * FROM users INNER JOIN comments ON comments.user_id = users.id INNER JOIN posts ON posts.user_id = users.id WHERE users.id > :usersid AND posts.id > :postsid', $query->sql);
     }
 
     public function test_select_with_multiple_joins_and_multiple_where_and_order_by()
@@ -171,7 +171,30 @@ class SelectTest extends TestCase
             ->order('users.id', 'DESC')
             ->get();
 
-        $this->assertEquals('SELECT * FROM users INNER JOIN comments ON comments.user_id = users.id INNER JOIN posts ON posts.user_id = users.id WHERE users.id > :users.id AND posts.id > :posts.id ORDER BY users.id DESC', $query->sql);
+        $this->assertEquals('SELECT * FROM users INNER JOIN comments ON comments.user_id = users.id INNER JOIN posts ON posts.user_id = users.id WHERE users.id > :usersid AND posts.id > :postsid ORDER BY users.id DESC', $query->sql);
+    }
+
+    public function test_multiple_queries()
+    {
+        $query1 = $this->select->query('users')
+            ->where('id', '>', 10)
+            ->get();
+
+        $query2 = $this->select->query('users')
+            ->get();
+
+        $this->assertEquals('SELECT * FROM users WHERE id > :id', $query1->sql);
+        $this->assertEquals('SELECT * FROM users', $query2->sql);
+    }
+
+    public function test_join_with_foreign_key_with_dot()
+    {
+        $query = $this->select->query('users')
+            ->join('comments', 'id', 'user_id')
+            ->where('users.id', '>', 10)
+            ->get();
+
+        $this->assertEquals('SELECT * FROM users INNER JOIN comments ON comments.user_id = users.id WHERE users.id > :usersid', $query->sql);
     }
 
 }

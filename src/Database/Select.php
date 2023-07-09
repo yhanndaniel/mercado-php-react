@@ -4,10 +4,10 @@ namespace App\Database;
 
 class Select
 {
-    private string $table;
-    private string $sql;
-    private string $order;
-    private string $limit;
+    private ?string $table = null;
+    private ?string $sql = null;
+    private ?string $order = null;
+    private ?string $limit = null;
     private array $wheres = [];
     private array $joins = [];
     private array $binds = [];
@@ -21,9 +21,15 @@ class Select
 
     public function where(string $field, string $operator, mixed $value, ?string $type = null)
     {
-        $this->wheres[] = "{$field} {$operator} :{$field} {$type} ";
+        $fieldPlaceholder = $field;
 
-        $this->binds[$field] = $value;
+        if (str_contains($fieldPlaceholder, '.')) {
+            $fieldPlaceholder = str_replace('.', '', $fieldPlaceholder);
+        }
+
+        $this->wheres[] = "{$field} {$operator} :{$fieldPlaceholder} {$type} ";
+
+        $this->binds[$fieldPlaceholder] = $value;
 
         return $this;
     }
@@ -46,7 +52,7 @@ class Select
         return $this;
     }
 
-    public function dump()
+    private function dump() :void
     {
         $this->sql.= (!empty($this->joins)) ? rtrim(implode('', $this->joins)) : '';
         $this->sql.= (!empty($this->wheres)) ? rtrim(' WHERE '.implode('', $this->wheres)) : '';
@@ -54,12 +60,26 @@ class Select
         $this->sql.= $this->limit ?? '';
     }
 
+    private function reset() :void
+    {
+        $this->table = null;
+        $this->sql = null;
+        $this->order = null;
+        $this->limit = null;
+        $this->wheres = [];
+        $this->joins = [];
+        $this->binds = [];
+    }
+
     public function get()
     {
         $this->dump();
+        $sql = $this->sql;
+        $binds = $this->binds;
+        $this->reset();
         return (object)[
-            'sql' => $this->sql,
-            'binds' => $this->binds
+            'sql' => $sql,
+            'binds' => $binds
         ];
     }
 }
