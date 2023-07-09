@@ -10,15 +10,12 @@ class UpdateTest extends TestCase
     public function test_update()
     {
         $update = new Update;
-        $update->update('users', [
-            'firstName' => 'Yhann',
-            'lastName' => 'Cruz',
-            'email' => 'yCk5c@example.com',
-            'password' => password_hash('password', PASSWORD_DEFAULT),
-        ], ['id', 1]);
+        $update->update('tb_category', [
+            'name' => 'TEST PHP UNIT',
+        ], ['id', 2]);
 
         $this->assertEquals(
-            "UPDATE users SET firstName = :firstName, lastName = :lastName, email = :email, password = :password WHERE id = :id",
+            "UPDATE tb_category SET name = :name WHERE id = :id",
             $update->getSql()
         );
     }

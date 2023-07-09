@@ -2,6 +2,7 @@
 
 use App\Database\DatabaseConnection;
 use App\Database\Select;
+use App\Database\Update;
 use Symfony\Component\Dotenv\Dotenv;
 
 include_once __DIR__.'/vendor/autoload.php';
@@ -18,10 +19,15 @@ $method = $_SERVER['REQUEST_METHOD'];
 
 $path = explode('/', $url);
 
-$select = new Select;
+// $select = new Select;
 
-$category = $select->query('tb_category')
-    ->join('tb_book', 'id', 'category_id')
-    ->first();
+// $category = $select->query('tb_category')
+//     ->join('tb_book', 'id', 'category_id')
+//     ->first();
 
-var_dump($category);
+$update = new Update;
+$updated = $update->update('tb_category', [
+    'name' => 'PHP',
+], ['id', 1]);
+
+var_dump($updated);
