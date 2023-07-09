@@ -17,13 +17,13 @@ class SelectTest extends TestCase
     }
     public function test_get_simple_select()
     {
-        $query = $this->select->query('users')->get();
+        $query = $this->select->query('users')->test();
         $this->assertEquals('SELECT * FROM users', $query->sql);
     }
 
     public function test_get_select_with_conditional()
     {
-        $query = $this->select->query('users')->where('id', '>', 10)->get();
+        $query = $this->select->query('users')->where('id', '>', 10)->test();
         $this->assertEquals('SELECT * FROM users WHERE id > :id', $query->sql);
     }
 
@@ -32,7 +32,7 @@ class SelectTest extends TestCase
         $query = $this->select->query('users')
             ->where('id', '>', 10, 'AND')
             ->where('firstName', '=', 'Yhann')
-            ->get();
+            ->test();
         $this->assertEquals('SELECT * FROM users WHERE id > :id AND firstName = :firstName', $query->sql);
     }
 
@@ -41,7 +41,7 @@ class SelectTest extends TestCase
         $query = $this->select->query('users')
             ->where('id', '>', 10, 'OR')
             ->where('firstName', '=', 'Yhann')
-            ->get();
+            ->test();
         $this->assertEquals('SELECT * FROM users WHERE id > :id OR firstName = :firstName', $query->sql);
     }
 
@@ -50,7 +50,7 @@ class SelectTest extends TestCase
         $query = $this->select->query('users')
             ->where('id', '>', 10, 'OR')
             ->where('firstName', '=', 'Yhann')
-            ->get();
+            ->test();
         $this->assertEquals(['id' => 10, 'firstName' => 'Yhann'], $query->binds);
     }
 
@@ -58,7 +58,7 @@ class SelectTest extends TestCase
     {
         $query = $this->select->query('users')
             ->order('id', 'DESC')
-            ->get();
+            ->test();
         $this->assertEquals('SELECT * FROM users ORDER BY id DESC', $query->sql);
     }
 
@@ -67,7 +67,7 @@ class SelectTest extends TestCase
         $query = $this->select->query('users')
             ->order('id', 'DESC')
             ->where('id', '>', 10)
-            ->get();
+            ->test();
         $this->assertEquals('SELECT * FROM users WHERE id > :id ORDER BY id DESC', $query->sql);
     }
 
@@ -75,7 +75,7 @@ class SelectTest extends TestCase
     {
         $query = $this->select->query('users')
             ->limit(10)
-            ->get();
+            ->test();
         $this->assertEquals('SELECT * FROM users LIMIT 10', $query->sql);
     }
 
@@ -84,7 +84,7 @@ class SelectTest extends TestCase
         $query = $this->select->query('users')
             ->limit(10)
             ->where('id', '>', 10)
-            ->get();
+            ->test();
         $this->assertEquals('SELECT * FROM users WHERE id > :id LIMIT 10', $query->sql);
     }
 
@@ -94,7 +94,7 @@ class SelectTest extends TestCase
             ->limit(10)
             ->where('id', '>', 10, 'AND')
             ->where('firstName', '=', 'Yhann')
-            ->get();
+            ->test();
         $this->assertEquals('SELECT * FROM users WHERE id > :id AND firstName = :firstName LIMIT 10', $query->sql);
     }
 
@@ -104,7 +104,7 @@ class SelectTest extends TestCase
             ->limit(10)
             ->where('id', '>', 10, 'OR')
             ->where('firstName', '=', 'Yhann')
-            ->get();
+            ->test();
         $this->assertEquals('SELECT * FROM users WHERE id > :id OR firstName = :firstName LIMIT 10', $query->sql);
     }
 
@@ -115,7 +115,7 @@ class SelectTest extends TestCase
             ->where('id', '>', 10, 'OR')
             ->where('firstName', '=', 'Yhann')
             ->order('id', 'DESC')
-            ->get();
+            ->test();
         $this->assertEquals('SELECT * FROM users WHERE id > :id OR firstName = :firstName ORDER BY id DESC LIMIT 10', $query->sql);
     }
 
@@ -123,7 +123,7 @@ class SelectTest extends TestCase
     {
         $query = $this->select->query('users')
             ->join('comments', 'id', 'user_id')
-            ->get();
+            ->test();
 
         $this->assertEquals('SELECT * FROM users INNER JOIN comments ON comments.user_id = users.id', $query->sql);
     }
@@ -133,7 +133,7 @@ class SelectTest extends TestCase
         $query = $this->select->query('users')
             ->join('comments', 'id', 'user_id')
             ->join('posts', 'id', 'user_id')
-            ->get();
+            ->test();
 
         $this->assertEquals('SELECT * FROM users INNER JOIN comments ON comments.user_id = users.id INNER JOIN posts ON posts.user_id = users.id', $query->sql);
     }
@@ -144,7 +144,7 @@ class SelectTest extends TestCase
             ->join('comments', 'id', 'user_id')
             ->join('posts', 'id', 'user_id')
             ->where('users.id', '>', 10)
-            ->get();
+            ->test();
 
         $this->assertEquals('SELECT * FROM users INNER JOIN comments ON comments.user_id = users.id INNER JOIN posts ON posts.user_id = users.id WHERE users.id > :usersid', $query->sql);
     }
@@ -156,7 +156,7 @@ class SelectTest extends TestCase
             ->join('posts', 'id', 'user_id')
             ->where('users.id', '>', 10, 'AND')
             ->where('posts.id', '>', 10)
-            ->get();
+            ->test();
 
         $this->assertEquals('SELECT * FROM users INNER JOIN comments ON comments.user_id = users.id INNER JOIN posts ON posts.user_id = users.id WHERE users.id > :usersid AND posts.id > :postsid', $query->sql);
     }
@@ -169,7 +169,7 @@ class SelectTest extends TestCase
             ->where('users.id', '>', 10, 'AND')
             ->where('posts.id', '>', 10)
             ->order('users.id', 'DESC')
-            ->get();
+            ->test();
 
         $this->assertEquals('SELECT * FROM users INNER JOIN comments ON comments.user_id = users.id INNER JOIN posts ON posts.user_id = users.id WHERE users.id > :usersid AND posts.id > :postsid ORDER BY users.id DESC', $query->sql);
     }
@@ -178,10 +178,10 @@ class SelectTest extends TestCase
     {
         $query1 = $this->select->query('users')
             ->where('id', '>', 10)
-            ->get();
+            ->test();
 
         $query2 = $this->select->query('users')
-            ->get();
+            ->test();
 
         $this->assertEquals('SELECT * FROM users WHERE id > :id', $query1->sql);
         $this->assertEquals('SELECT * FROM users', $query2->sql);
@@ -192,7 +192,7 @@ class SelectTest extends TestCase
         $query = $this->select->query('users')
             ->join('comments', 'id', 'user_id')
             ->where('users.id', '>', 10)
-            ->get();
+            ->test();
 
         $this->assertEquals('SELECT * FROM users INNER JOIN comments ON comments.user_id = users.id WHERE users.id > :usersid', $query->sql);
     }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Database\DatabaseConnection;
+use App\Database\Select;
 use Symfony\Component\Dotenv\Dotenv;
 
 include_once __DIR__.'/vendor/autoload.php';
@@ -10,8 +11,6 @@ header('Content-Type: application/json');
 
 (new Dotenv())->load(__DIR__.'/.env');
 
-//var_dump($_ENV);
-
 date_default_timezone_set('America/Sao_Paulo');
 
 $url = explode('?', $_SERVER['REQUEST_URI'])[0];
@@ -19,13 +18,10 @@ $method = $_SERVER['REQUEST_METHOD'];
 
 $path = explode('/', $url);
 
-$db = DatabaseConnection::open();
-$rs = $db->prepare("SELECT x.* FROM db_estacio_library.tb_category x");
-$rs->execute();
-$obj = $rs->fetchAll(PDO::FETCH_ASSOC);
+$select = new Select;
 
-DatabaseConnection::close($db);
+$category = $select->query('tb_category')
+    ->join('tb_book', 'id', 'category_id')
+    ->first();
 
-echo json_encode($obj);
-
-//var_dump($url, $path, $method);
+var_dump($category);

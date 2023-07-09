@@ -2,6 +2,8 @@
 
 namespace App\Database;
 
+use PDO;
+
 class Select
 {
     private ?string $table = null;
@@ -72,6 +74,36 @@ class Select
     }
 
     public function get()
+    {
+        $this->dump();
+        $sql = $this->sql;
+        $binds = $this->binds;
+        $this->reset();
+        
+        $connection = DatabaseConnection::open();
+        $rs = $connection->prepare($sql);
+        $rs->execute($binds ?? []);
+        DatabaseConnection::close($connection);
+
+        return $rs->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function first()
+    {
+        $this->dump();
+        $sql = $this->sql;
+        $binds = $this->binds;
+        $this->reset();
+        
+        $connection = DatabaseConnection::open();
+        $rs = $connection->prepare($sql);
+        $rs->execute($binds ?? []);
+        DatabaseConnection::close($connection);
+
+        return $rs->fetchObject();
+    }
+
+    public function test() :object
     {
         $this->dump();
         $sql = $this->sql;
