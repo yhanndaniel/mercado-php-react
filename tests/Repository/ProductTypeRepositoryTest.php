@@ -4,6 +4,7 @@ namespace Tests\Repository;
 
 use App\Database\Create;
 use App\Database\Select;
+use App\Database\Update;
 use App\Models\ProductType;
 use App\Repository\ProductTypeRepository;
 use PHPUnit\Framework\TestCase;
@@ -13,14 +14,17 @@ class ProductTypeRepositoryTest extends TestCase
 
     private Select $select;
     private Create $create;
+    private Update $update;
     private ProductTypeRepository $productTypeRepository;
 
     public function setUp(): void
     {
+        date_default_timezone_set('America/Sao_Paulo');
         parent::setUp();
         $this->select = new Select;
         $this->create = new Create;
-        $this->productTypeRepository = new ProductTypeRepository($this->select, $this->create);
+        $this->update = new Update;
+        $this->productTypeRepository = new ProductTypeRepository($this->select, $this->create, $this->update);
     }
     public function test_getAll()
     {
@@ -41,6 +45,16 @@ class ProductTypeRepositoryTest extends TestCase
         $productType->setDescription('Language');
         $productType->setTax(10);
         $result = $this->productTypeRepository->create($productType);
+        $this->assertTrue($result);
+    }
+
+    public function test_update()
+    {
+        $productType = $this->productTypeRepository->getById(3);
+        $productType->setName('JavaScript Alterado Teste');
+        $productType->setDescription('Language Alterado Teste');
+        $productType->setTax(15);
+        $result = $this->productTypeRepository->update($productType);
         $this->assertTrue($result);
     }
 

@@ -22,16 +22,22 @@ $method = $_SERVER['REQUEST_METHOD'];
 
 $path = explode('/', $url);
 
-$productTypeRepo = new ProductTypeRepository(new Select, new Create);
+$productTypeRepo = new ProductTypeRepository(new Select, new Create, new Update);
 
-$productType = new ProductType();
-$productType->setName('JavaScript');
-$productType->setDescription('Language');
-$productType->setTax(10);
+// $productType = new ProductType();
+// $productType->setName('JavaScript');
+// $productType->setDescription('Language');
+// $productType->setTax(10);
 //$productType->setCreatedAt(date('Y-m-d H:i:s'));
 //$productType->setUpdatedAt(date('Y-m-d H:i:s'));
 
-$category = $productTypeRepo->create($productType);
+$category = $productTypeRepo->getById(2);
+
+$category->setName('PHP ALTERADO');
+
+//var_dump($category);
+var_dump($productTypeRepo->update($category));
+die();
 
 echo json_encode($category);
 

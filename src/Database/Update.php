@@ -4,8 +4,10 @@ namespace App\Database;
 class Update
 {
     private string $sql;
+    private array $data;
+    private array $where;
 
-    public function update(string $table, array $data, array $where = []): bool
+    public function update(string $table, array $data, array $where = [])
     {
         $this->sql = "UPDATE {$table} SET ";
         foreach ($data as $key => $value) {
@@ -13,13 +15,18 @@ class Update
         }
         $this->sql = rtrim($this->sql, ', ');
         $this->sql .= " WHERE {$where[0]} = :{$where[0]}";
+        $this->data = $data;
+        $this->where = $where;
 
-        // $connection = DatabaseConnection::open();
-        // $rs = $connection->prepare($this->sql);
+        return $this;
+    }
 
-        // return $rs->execute(array_merge($data, [$where[0] => $where[1]]));
+    public function execute()
+    {
+        $connection = DatabaseConnection::open();
+        $rs = $connection->prepare($this->sql);
 
-        return true;
+        return $rs->execute(array_merge($this->data, [$this->where[0] => $this->where[1]]));
     }
 
     public function getSql(): string

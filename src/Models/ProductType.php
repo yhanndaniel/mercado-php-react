@@ -84,4 +84,16 @@ class ProductType implements JsonSerializable
 
         return get_object_vars($this);
     }
+
+    public function toArrayToUpdate(): array
+    {
+        $this->updated_at = date('Y-m-d H:i:s');
+
+        return [
+            'name' => $this->name,
+            'description' => $this->description,
+            'tax' => $this->tax,
+            'updated_at' => $this->updated_at
+        ];
+    }
 }
