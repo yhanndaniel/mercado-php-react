@@ -1,8 +1,10 @@
 <?php
 
+use App\Database\Create;
 use App\Database\Select;
 use App\Database\Update;
 use App\Database\DatabaseConnection;
+use App\Models\ProductType;
 use Symfony\Component\Dotenv\Dotenv;
 use App\Repository\ProductTypeRepository;
 
@@ -20,9 +22,18 @@ $method = $_SERVER['REQUEST_METHOD'];
 
 $path = explode('/', $url);
 
-$productType = new ProductTypeRepository(new Select);
+$productTypeRepo = new ProductTypeRepository(new Select, new Create);
 
-$category = $productType->getAll();
+$productType = new ProductType();
+$productType->setName('JavaScript');
+$productType->setDescription('Language');
+$productType->setTax(10);
+//$productType->setCreatedAt(date('Y-m-d H:i:s'));
+//$productType->setUpdatedAt(date('Y-m-d H:i:s'));
+
+$category = $productTypeRepo->create($productType);
+
+echo json_encode($category);
 
 // $update = new Update;
 // $updated = $update->update('tb_category', [
@@ -31,4 +42,4 @@ $category = $productType->getAll();
 
 //var_dump(json_encode($category));
 
-echo json_encode($category);
+// echo json_encode($category);

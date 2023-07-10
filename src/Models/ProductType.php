@@ -1,7 +1,6 @@
 <?php
 namespace App\Models;
 
-use DateTime;
 use JsonSerializable;
 
 class ProductType implements JsonSerializable
@@ -10,8 +9,8 @@ class ProductType implements JsonSerializable
     private string $name;
     private string $description;
     private float $tax;
-    private ?DateTime $created_at;
-    private ?DateTime $updated_at;
+    private ?string $created_at;
+    private ?string $updated_at;
 
     public function jsonSerialize(): mixed
     {
@@ -58,23 +57,31 @@ class ProductType implements JsonSerializable
         $this->tax = $tax;
     }
 
-    public function getCreatedAt(): DateTime
+    public function getCreatedAt(): string
     {
         return $this->created_at;
     }
 
-    public function setCreatedAt(DateTime $created_at): void
+    public function setCreatedAt(string $created_at): void
     {
         $this->created_at = $created_at;
     }
 
-    public function getUpdatedAt(): DateTime
+    public function getUpdatedAt(): string
     {
         return $this->updated_at;
     }
 
-    public function setUpdatedAt(DateTime $updated_at): void
+    public function setUpdatedAt(string $updated_at): void
     {
         $this->updated_at = $updated_at;
+    }
+
+    public function toArray(): array
+    {
+        $this->created_at ??= date('Y-m-d H:i:s');
+        $this->updated_at ??= date('Y-m-d H:i:s');
+
+        return get_object_vars($this);
     }
 }
