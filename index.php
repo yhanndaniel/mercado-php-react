@@ -32,12 +32,12 @@ $productTypeRepo = new ProductTypeRepository(new Select, new Create, new Update,
 //$productType->setCreatedAt(date('Y-m-d H:i:s'));
 //$productType->setUpdatedAt(date('Y-m-d H:i:s'));
 
-$category = $productTypeRepo->getById(7);
+//$category = $productTypeRepo->getById(7);
 
 //$category->setName('PHP ALTERADO');
 
 //var_dump($category);
-var_dump($productTypeRepo->delete($category));
+var_dump($productTypeRepo->count());
 die();
 
 echo json_encode($category);

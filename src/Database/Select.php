@@ -15,10 +15,14 @@ class Select
     private array $joins = [];
     private array $binds = [];
 
-    public function query(string $table)
+    public function query(string $table, ?string $type = null)
     {
         $this->table = $table;
-        $this->sql = 'SELECT * FROM ' . $this->table;
+        if ($type == 'count') {
+            $this->sql = 'SELECT COUNT(*) FROM ' . $this->table;
+        } else {
+            $this->sql = 'SELECT * FROM ' . $this->table;
+        }
         return $this;
     }
 

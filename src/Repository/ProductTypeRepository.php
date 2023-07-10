@@ -47,6 +47,7 @@ class ProductTypeRepository implements RepositoryInterface
     }
 
     public function count(){
-        return 'count';
+        $count = $this->select->query(self::TABLE_NAME, 'count')->first();
+        return (int) $count->count;
     }
 }

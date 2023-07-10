@@ -68,5 +68,11 @@ class ProductTypeRepositoryTest extends TestCase
         $this->assertTrue($result);
     }
 
+    public function test_count()
+    {
+        $result = $this->productTypeRepository->count();
+        $this->assertIsInt($result);
+    }
+
     
 }
