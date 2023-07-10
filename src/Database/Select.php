@@ -3,6 +3,7 @@
 namespace App\Database;
 
 use PDO;
+use stdClass;
 
 class Select
 {
@@ -73,7 +74,7 @@ class Select
         $this->binds = [];
     }
 
-    public function get()
+    public function get($class = 'stdClass')
     {
         $this->dump();
         $sql = $this->sql;
@@ -85,10 +86,10 @@ class Select
         $rs->execute($binds ?? []);
         DatabaseConnection::close($connection);
 
-        return $rs->fetchAll(PDO::FETCH_ASSOC);
+        return $rs->fetchAll(PDO::FETCH_CLASS, $class);
     }
 
-    public function first()
+    public function first($class = 'stdClass')
     {
         $this->dump();
         $sql = $this->sql;
@@ -100,7 +101,7 @@ class Select
         $rs->execute($binds ?? []);
         DatabaseConnection::close($connection);
 
-        return $rs->fetchObject();
+        return $rs->fetchObject($class);
     }
 
     public function test() :object

@@ -14,10 +14,12 @@ class Update
         $this->sql = rtrim($this->sql, ', ');
         $this->sql .= " WHERE {$where[0]} = :{$where[0]}";
 
-        $connection = DatabaseConnection::open();
-        $rs = $connection->prepare($this->sql);
+        // $connection = DatabaseConnection::open();
+        // $rs = $connection->prepare($this->sql);
 
-        return $rs->execute(array_merge($data, [$where[0] => $where[1]]));
+        // return $rs->execute(array_merge($data, [$where[0] => $where[1]]));
+
+        return true;
     }
 
     public function getSql(): string

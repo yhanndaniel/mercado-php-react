@@ -1,9 +1,10 @@
 <?php
 
-use App\Database\DatabaseConnection;
 use App\Database\Select;
 use App\Database\Update;
+use App\Database\DatabaseConnection;
 use Symfony\Component\Dotenv\Dotenv;
+use App\Repository\ProductTypeRepository;
 
 include_once __DIR__.'/vendor/autoload.php';
 
@@ -19,15 +20,15 @@ $method = $_SERVER['REQUEST_METHOD'];
 
 $path = explode('/', $url);
 
-// $select = new Select;
+$productType = new ProductTypeRepository(new Select);
 
-// $category = $select->query('tb_category')
-//     ->join('tb_book', 'id', 'category_id')
-//     ->first();
+$category = $productType->getAll();
 
-$update = new Update;
-$updated = $update->update('tb_category', [
-    'name' => 'PHP',
-], ['id', 1]);
+// $update = new Update;
+// $updated = $update->update('tb_category', [
+//     'name' => 'PHP',
+// ], ['id', 1]);
 
-var_dump($updated);
+//var_dump(json_encode($category));
+
+echo json_encode($category);
