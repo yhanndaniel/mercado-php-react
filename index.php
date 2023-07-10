@@ -4,6 +4,7 @@ use App\Database\Create;
 use App\Database\Select;
 use App\Database\Update;
 use App\Database\DatabaseConnection;
+use App\Database\Delete;
 use App\Models\ProductType;
 use Symfony\Component\Dotenv\Dotenv;
 use App\Repository\ProductTypeRepository;
@@ -22,7 +23,7 @@ $method = $_SERVER['REQUEST_METHOD'];
 
 $path = explode('/', $url);
 
-$productTypeRepo = new ProductTypeRepository(new Select, new Create, new Update);
+$productTypeRepo = new ProductTypeRepository(new Select, new Create, new Update, new Delete);
 
 // $productType = new ProductType();
 // $productType->setName('JavaScript');
@@ -31,12 +32,12 @@ $productTypeRepo = new ProductTypeRepository(new Select, new Create, new Update)
 //$productType->setCreatedAt(date('Y-m-d H:i:s'));
 //$productType->setUpdatedAt(date('Y-m-d H:i:s'));
 
-$category = $productTypeRepo->getById(2);
+$category = $productTypeRepo->getById(7);
 
-$category->setName('PHP ALTERADO');
+//$category->setName('PHP ALTERADO');
 
 //var_dump($category);
-var_dump($productTypeRepo->update($category));
+var_dump($productTypeRepo->delete($category));
 die();
 
 echo json_encode($category);

@@ -3,6 +3,7 @@ namespace App\Repository;
 
 use App\Database\Create;
 use App\Database\DatabaseConnection;
+use App\Database\Delete;
 use App\Database\Select;
 use App\Database\Update;
 use App\Models\ProductType;
@@ -13,14 +14,16 @@ class ProductTypeRepository implements RepositoryInterface
     private Select $select;
     private Create $create;
     private Update $update;
+    private Delete $delete;
     private const CLASS_NAME = 'App\Models\ProductType';
     public const TABLE_NAME = 'product_types';
 
-    public function __construct(Select $select, Create $create, Update $update)
+    public function __construct(Select $select, Create $create, Update $update, Delete $delete)
     {
         $this->select = $select;
         $this->create = $create;
         $this->update = $update;
+        $this->delete = $delete;
     }
     public function getAll(): array
     {
@@ -39,8 +42,8 @@ class ProductTypeRepository implements RepositoryInterface
         return $this->update->update(self::TABLE_NAME, $productType->toArrayToUpdate(), ['id', $productType->getId()])->execute();
     }
 
-    public function delete($id){
-        return 'delete';
+    public function delete($productType){
+        return $this->delete->delete(self::TABLE_NAME, ['id', $productType->getId()])->execute();
     }
 
     public function count(){
