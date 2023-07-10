@@ -20,7 +20,7 @@ class Update
         return $rs->execute(array_merge($data, [$where[0] => $where[1]]));
     }
 
-    public function getSql()
+    public function getSql(): string
     {
         return $this->sql;
     }
