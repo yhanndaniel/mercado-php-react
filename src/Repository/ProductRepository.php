@@ -5,16 +5,16 @@ use App\Database\Create;
 use App\Database\Delete;
 use App\Database\Select;
 use App\Database\Update;
-use App\Models\ProductType;
+use App\Models\Product;
 
-class ProductTypeRepository implements RepositoryInterface
+class ProductRepository implements RepositoryInterface
 {
     private Select $select;
     private Create $create;
     private Update $update;
     private Delete $delete;
-    private const CLASS_NAME = 'App\Models\ProductType';
-    public const TABLE_NAME = 'product_types';
+    private const CLASS_NAME = 'App\Models\Product';
+    private const TABLE_NAME = 'products';
 
     public function __construct(Select $select, Create $create, Update $update, Delete $delete)
     {
@@ -23,28 +23,34 @@ class ProductTypeRepository implements RepositoryInterface
         $this->update = $update;
         $this->delete = $delete;
     }
+
     public function getAll(): array
     {
         return $this->select->query(self::TABLE_NAME)->get(self::CLASS_NAME);
     }
 
-    public function getById($id) : ?ProductType{
+    public function getById($id) : ?Product
+    {
         return $this->select->query(self::TABLE_NAME)->where('id', '=', $id)->first(self::CLASS_NAME);
     }
 
-    public function create($productType) : ?bool{
-        return $this->create->create(self::TABLE_NAME, $productType->toArray())->execute();
+    public function create($product) : ?bool
+    {
+        return $this->create->create(self::TABLE_NAME, $product->toArray())->execute();
     }
 
-    public function update($productType){
-        return $this->update->update(self::TABLE_NAME, $productType->toArrayToUpdate(), ['id', $productType->getId()])->execute();
+    public function update($product)
+    {
+        return $this->update->update(self::TABLE_NAME, $product->toArrayToUpdate(), ['id', $product->getId()])->execute();
     }
 
-    public function delete($productType){
-        return $this->delete->delete(self::TABLE_NAME, ['id', $productType->getId()])->execute();
+    public function delete($product)
+    {
+        return $this->delete->delete(self::TABLE_NAME, ['id', $product->getId()])->execute();
     }
 
-    public function count(){
+    public function count()
+    {
         $count = $this->select->query(self::TABLE_NAME, 'count')->first();
         return (int) $count->count;
     }
