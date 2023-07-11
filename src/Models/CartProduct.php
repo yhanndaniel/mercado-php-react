@@ -1,7 +1,9 @@
 <?php
 namespace App\Models;
 
+use App\Helpers\Helpers;
 use JsonSerializable;
+use stdClass;
 
 class CartProduct implements JsonSerializable
 {
@@ -19,9 +21,14 @@ class CartProduct implements JsonSerializable
         return get_object_vars($this);
     }
 
-    private function now(): string
+    public function fill(stdClass $data): void
     {
-        return date('Y-m-d H:i:s');
+        $this->products_id = $data->products_id;
+        $this->cart_id = $data->cart_id;
+        $this->quantity = $data->quantity;
+        $this->total_amount = $data->total_amount;
+        $this->total_tax = $data->total_tax;
+        $this->total = $data->total;
     }
 
     public function getProductsId(): int
@@ -106,15 +113,15 @@ class CartProduct implements JsonSerializable
 
     public function toArrary(): array
     {
-        $this->created_at ??= $this->now();
-        $this->updated_at ??= $this->now();
+        $this->created_at ??= Helpers::now();
+        $this->updated_at ??= Helpers::now();
 
         return get_object_vars($this);
     }
 
     public function toArrayToUpdate(): array
     {
-        $this->updated_at = $this->now();
+        $this->updated_at = Helpers::now();
 
         return [
             'products_id' => $this->products_id,
