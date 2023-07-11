@@ -18,4 +18,11 @@ class HomeController
             'message' => 'Hello Test',
         ]);
     }
+
+    public function api()
+    {
+        Json::render([
+            'message' => 'Hello API',
+        ]);
+    }
 }

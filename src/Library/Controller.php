@@ -2,7 +2,10 @@
 
 namespace App\Library;
 
+use DI\Container;
+use DI\ContainerBuilder;
 use Exception;
+use ReflectionMethod;
 
 class Controller
 {
@@ -31,7 +34,11 @@ class Controller
             throw new Exception("Controller {$controller} does not exist");
         }
 
-        $controller = new $controllerInstance;
+        $container = new Container();
+        $builder = new ContainerBuilder();
+        $container = $builder->build();
+
+        $controller = $container->get($controllerInstance);
 
         if (!method_exists($controller, $action)) {
             throw new Exception("Action {$action} does not exist");
@@ -41,6 +48,8 @@ class Controller
             (new Middleware($route->getRouteOptionsInstance()->execute('middlewares')))->execute();
         }
 
-        call_user_func_array([$controller, $action], $route->getRouteWildcardInstance()?->getParams() ?? []);
+        $reflectionMethod = new ReflectionMethod($controller, $action);
+
+        $reflectionMethod->invokeArgs($controller, $route->getRouteWildcardInstance()?->getParams() ?? []);
     }
 }

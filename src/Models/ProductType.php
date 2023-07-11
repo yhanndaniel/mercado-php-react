@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use JsonSerializable;
+use stdClass;
 
 class ProductType implements JsonSerializable
 {
@@ -15,6 +16,18 @@ class ProductType implements JsonSerializable
     public function jsonSerialize(): mixed
     {
         return get_object_vars($this);
+    }
+
+    private function now(): string
+    {
+        return date('Y-m-d H:i:s');
+    }
+
+    public function fill(stdClass $data): void
+    {
+        $this->name = $data->name;
+        $this->description = $data->description;
+        $this->tax = $data->tax;
     }
 
     public function getId(): int
@@ -79,15 +92,15 @@ class ProductType implements JsonSerializable
 
     public function toArray(): array
     {
-        $this->created_at ??= date('Y-m-d H:i:s');
-        $this->updated_at ??= date('Y-m-d H:i:s');
+        $this->created_at ??= $this->now();
+        $this->updated_at ??= $this->now();
 
         return get_object_vars($this);
     }
 
     public function toArrayToUpdate(): array
     {
-        $this->updated_at = date('Y-m-d H:i:s');
+        $this->updated_at = $this->now();
 
         return [
             'name' => $this->name,
