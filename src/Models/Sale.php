@@ -18,6 +18,11 @@ class Sale implements JsonSerializable
         return get_object_vars($this);
     }
 
+    private function now(): string
+    {
+        return date('Y-m-d H:i:s');
+    }
+
     public function getId(): int
     {
         return $this->id;
@@ -90,15 +95,15 @@ class Sale implements JsonSerializable
 
     public function toArray(): array
     {
-        $this->created_at ??= date('Y-m-d H:i:s');
-        $this->updated_at ??= date('Y-m-d H:i:s');
+        $this->created_at ??= $this->now();
+        $this->updated_at ??= $this->now();
 
         return get_object_vars($this);
     }
 
     public function toArrayToUpdate(): array
     {
-        $this->updated_at = date('Y-m-d H:i:s');
+        $this->updated_at = $this->now();
 
         return [
             'total_amount' => $this->total_amount,

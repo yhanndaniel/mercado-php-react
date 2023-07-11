@@ -19,6 +19,11 @@ class CartProduct implements JsonSerializable
         return get_object_vars($this);
     }
 
+    private function now(): string
+    {
+        return date('Y-m-d H:i:s');
+    }
+
     public function getProductsId(): int
     {
         return $this->products_id;
@@ -101,15 +106,15 @@ class CartProduct implements JsonSerializable
 
     public function toArrary(): array
     {
-        $this->created_at ??= date('Y-m-d H:i:s');
-        $this->updated_at ??= date('Y-m-d H:i:s');
+        $this->created_at ??= $this->now();
+        $this->updated_at ??= $this->now();
 
         return get_object_vars($this);
     }
 
     public function toArrayToUpdate(): array
     {
-        $this->updated_at = date('Y-m-d H:i:s');
+        $this->updated_at = $this->now();
 
         return [
             'products_id' => $this->products_id,
