@@ -7,8 +7,10 @@ import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import Home from './routes/Home';
-import Admin from './routes/Admin';
+import ProductType from './routes/Admin/ProductType';
 import ErrorPage from './routes/ErrorPage';
+import Product from './routes/Admin/Product';
+import Sales from './routes/Admin/Sales';
 
 const router = createBrowserRouter([
   {
@@ -22,7 +24,15 @@ const router = createBrowserRouter([
       },
       {
         path: 'admin',
-        element: <Admin />
+        element: <ProductType />
+      },
+      {
+        path: 'admin/produtos',
+        element: <Product />
+      },
+      {
+        path: 'admin/vendas',
+        element: <Sales />
       }
     ]
   }

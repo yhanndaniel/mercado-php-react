@@ -1,0 +1,22 @@
+nav {
+   /* cor de fundo da navbar */
+  padding: 10px; /* espaçamento interno da navbar */
+  display: flex; /* alinhar os links horizontalmente */
+  justify-content: center; /* centralizar os links */
+}
+
+nav a {
+  background-color: #fff;
+  color: #333; /* cor dos links na navbar */
+  text-decoration: none; /* remover sublinhado dos links */
+  margin: 0 10px; /* margem horizontal entre os links */
+  padding: 10px;
+  font-size: 16px; /* tamanho da fonte dos links */
+  transition: color 0.3s transform 0.3s; /* transição suave da cor ao passar o mouse */
+
+}
+
+nav a:hover {
+  color: #c5d483;
+  transform: scale(1.1);
+}
