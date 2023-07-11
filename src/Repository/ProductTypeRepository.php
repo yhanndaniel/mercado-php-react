@@ -1,6 +1,7 @@
 <?php
 namespace App\Repository;
 
+use App\Interfaces\RepositoryInterface;
 use App\Database\Create;
 use App\Database\Delete;
 use App\Database\Select;

@@ -1,6 +1,7 @@
 <?php
 namespace App\Repository;
 
+use App\Interfaces\RepositoryInterface;
 use App\Models\CartProduct;
 use App\Database\Select;
 use App\Database\Create;
