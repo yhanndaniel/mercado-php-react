@@ -7,9 +7,7 @@ class HomeController
 {
     public function index()
     {
-        Json::render([
-            'message' => 'Hello World',
-        ]);
+        echo file_get_contents('./build/index.html');
     }
 
     public function test()
@@ -19,10 +17,4 @@ class HomeController
         ]);
     }
 
-    public function api()
-    {
-        Json::render([
-            'message' => 'Hello API',
-        ]);
-    }
 }

@@ -3,3 +3,4 @@ vendor/
 .phpunit.cache
 .phpunit.result.cache
 .vscode
+frontend/node_modules
