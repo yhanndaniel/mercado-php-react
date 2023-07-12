@@ -38,13 +38,13 @@ function Cart() {
                 total_tax: element.qtd*element.taxCalculated,
                 total: element.qtd*element.price + element.qtd*element.taxCalculated,
               }).then(({ data }) => {
-                toast.success("Compra realizada!!!");
                 setCartItems([]);
               }).catch(({ data }) => {
                 toast.error(data)
                 setCartItems([]);
               });
           });
+          toast.success("Compra realizada!!!");
         })
         .catch(({ data }) => toast.error(data));
   }

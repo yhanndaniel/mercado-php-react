@@ -50,7 +50,7 @@ class Product implements JsonSerializable
         $this->name = $data->name;
         $this->price = $data->price;
         $this->description = $data->description;
-        $this->image = $data->image;
+        $this->image = $data?->image ?? 'https://placehold.co/236';
     }
 
     public function getId(): int
