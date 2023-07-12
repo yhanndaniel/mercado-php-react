@@ -2,8 +2,12 @@
 namespace App\Models;
 
 use App\Helpers\Helpers;
+use App\Repository\ProductTypeRepository;
+use DI\Container;
+use DI\ContainerBuilder;
 use JsonSerializable;
 use stdClass;
+
 class Product implements JsonSerializable
 {
     private int $id;
@@ -11,9 +15,21 @@ class Product implements JsonSerializable
     private string $name;
     private float $price;
     private string $description;
-    private string $image;
+    private ?string $image;
     private ?string $created_at;
     private ?string $updated_at;
+    private ?string $productType;
+    public function __construct()
+    {
+        $container = new Container();
+        $builder = new ContainerBuilder();
+        $container = $builder->build();
+        $productTypeRepository = $container->get(ProductTypeRepository::class);
+        if (isset($this->product_types_id)) {
+            $productType = $productTypeRepository->getById($this->product_types_id);
+            $this->productType = $productType->getName();
+        }
+    }
 
     public function jsonSerialize(): mixed
     {

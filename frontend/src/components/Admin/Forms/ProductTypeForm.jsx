@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from "react";
 import { toast } from "react-toastify";
 
 import { FormContainer, InputArea, Label, Button, Input, ButtonCancel } from "../Tables/styledComponets";
-const ProductTypeForm = ({ getUsers, onEdit, setOnEdit }) => {
+const ProductTypeForm = ({ getProductTypes, onEdit, setOnEdit }) => {
   const ref = useRef();
 
   useEffect(() => {
@@ -54,7 +54,7 @@ const ProductTypeForm = ({ getUsers, onEdit, setOnEdit }) => {
     productType.tax.value = "";
 
     setOnEdit(null);
-    getUsers();
+    getProductTypes();
   };
 
   const handleCancel = () => {

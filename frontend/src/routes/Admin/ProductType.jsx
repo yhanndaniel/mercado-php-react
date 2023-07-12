@@ -8,28 +8,28 @@ import { toast } from 'react-toastify';
 import ProductTypeForm from '../../components/Admin/Forms/ProductTypeForm';
 
 const ProductType = () => {
-  const [users, setUsers] = useState([]);
+  const [productTypes, setProductTypes] = useState([]);
   const [onEdit, setOnEdit] = useState(null);
 
-  const getUsers = async () => {
+  const getProductTypes = async () => {
     try {
       const res = await axios.get("http://localhost:8000/api/product-type");
-      setUsers(res.data.sort((a, b) => (a.nome > b.nome ? 1 : -1)));
+      setProductTypes(res.data.sort((a, b) => (a.nome > b.nome ? 1 : -1)));
     } catch (error) {
       toast.error(error);
     }
   };
 
   useEffect(() => {
-    getUsers();
-  }, [setUsers]);
+    getProductTypes();
+  }, [setProductTypes]);
 
   return (
     <section className="container dashboard">
       <NavbarAdmin />
       <h2>Tipos de produtos</h2>
-      <ProductTypeForm onEdit={onEdit} setOnEdit={setOnEdit} getUsers={getUsers} />
-      <ProductTypeTable setOnEdit={setOnEdit} users={users} setUsers={setUsers} />
+      <ProductTypeForm onEdit={onEdit} setOnEdit={setOnEdit} getProductTypes={getProductTypes} />
+      <ProductTypeTable setOnEdit={setOnEdit} productTypes={productTypes} setProductTypes={setProductTypes} />
     </section>
   );
 };

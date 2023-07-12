@@ -3,18 +3,19 @@ import axios from "axios";
 import { FaTrash, FaEdit } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { Table, Thead, Tbody, Tr, Th, Td } from "./styledComponets";
-const ProductTypeTable = ({ productTypes, setProductTypes, setOnEdit }) => {
+const ProductTable = ({ products, setProducts, setOnEdit }) => {
+
   const handleEdit = (item) => {
     setOnEdit(item);
   };
 
   const handleDelete = async (id) => {
     await axios
-      .delete("http://localhost:8000/api/product-type/" + id)
+      .delete("http://localhost:8000/api/product/" + id)
       .then(({ data }) => {
-        const newArray = productTypes.filter((productType) => productType.id !== id);
+        const newArray = products.filter((product) => product.id !== id);
 
-        setProductTypes(newArray);
+        setProducts(newArray);
         toast.success(data);
       })
       .catch(({ data }) => toast.error(data));
@@ -28,18 +29,22 @@ const ProductTypeTable = ({ productTypes, setProductTypes, setOnEdit }) => {
         <Tr>
           <Th>Nome</Th>
           <Th>Descrição</Th>
-          <Th>Imposto</Th>
+          <Th>Preço</Th>
+          <Th>Tipo</Th>
           <Th></Th>
           <Th></Th>
         </Tr>
       </Thead>
       <Tbody>
-        {productTypes.map((item, i) => (
+        {products.map((item, i) => (
           <Tr key={i}>
-            <Td width="30%">{item.name}</Td>
+            <Td width="20%">{item.name}</Td>
             <Td width="30%">{item.description}</Td>
             <Td width="20%">
-              {item.tax}
+              {item.price}
+            </Td>
+            <Td width="20%">
+              {item.productType}
             </Td>
             <Td aligncenter width="5%">
               <FaEdit onClick={() => handleEdit(item)} />
@@ -54,4 +59,4 @@ const ProductTypeTable = ({ productTypes, setProductTypes, setOnEdit }) => {
   );
 };
 
-export default ProductTypeTable;
+export default ProductTable;
