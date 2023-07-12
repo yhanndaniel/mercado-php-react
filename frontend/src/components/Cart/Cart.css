@@ -20,7 +20,7 @@
 }
 
 .cart-resume {
-  font-size: 1.8rem;
+  font-size: 0.8rem;
   font-weight: 500;
   padding: 35px 0 15px;
   border-top: 1px solid #ddd;
@@ -32,4 +32,22 @@
 
 .cart--active {
   transform: translate(0, 0);
+}
+
+.button__cancel-cart {
+  color: #d83232;
+  font-size: 1.4rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding-left: 10px;
+}
+
+.button__buy-cart {
+  color: #2dc04d;
+  font-size: 1.4rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding-right: 10px;
 }

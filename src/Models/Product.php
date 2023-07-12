@@ -19,6 +19,7 @@ class Product implements JsonSerializable
     private ?string $created_at;
     private ?string $updated_at;
     private ?string $productType;
+    private ?float $taxCalculated;
     public function __construct()
     {
         $container = new Container();
@@ -29,7 +30,14 @@ class Product implements JsonSerializable
             $productType = $productTypeRepository->getById($this->product_types_id);
             $this->image = 'https://placehold.co/236';
             $this->productType = $productType->getName();
+            $this->taxCalculated = $this->calculateTax($this->price, $productType->getTax());
         }
+    }
+
+    private function calculateTax(float $price, float $tax): float
+    {
+        $tax = $tax / 100;
+        return $price * $tax;
     }
 
     public function jsonSerialize(): mixed

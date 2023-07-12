@@ -7,11 +7,20 @@ import formatCurrency from '../../utils/formatCurrency';
 import AppContext from '../../context/AppContext';
 
 function ProductCard({ data }) {
-  const { name, image, price } = data;
+  const { name, image, price, taxCalculated } = data;
 
   const { cartItems, setCartItems } = useContext(AppContext);
 
-  const handleAddCart = () => setCartItems([ ...cartItems, data ]);
+  const handleAddCart = () => {
+    let hasItem = cartItems.some((item) => item.id === data.id);
+    if (hasItem) {
+      const updatedItems = cartItems.map((item) => item.id === data.id ? { ...item, qtd: item.qtd + 1 } : item);
+      setCartItems(updatedItems);
+    } else {
+      data.qtd = 1;
+      setCartItems([ ...cartItems, data ])
+    }
+  };
 
   return (
     <section className="product-card">
@@ -25,6 +34,7 @@ function ProductCard({ data }) {
       <div className="card__infos">
         <h2 className="card__price">{formatCurrency(price, 'BRL')}</h2>
         <h2 className="card__title">{name}</h2>
+        <h6 className="card__tax">(Imposto) {formatCurrency(taxCalculated, 'BRL')}</h6>
       </div>
 
       <button
