@@ -5,6 +5,7 @@ import './Admin.css';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import ProductTable from '../../components/Admin/Tables/ProductTable';
+import ProductForm from '../../components/Admin/Forms/ProductForm';
 
 const Product = () => {
   const [products, setProducts] = useState([]);
@@ -27,6 +28,7 @@ const Product = () => {
     <section className="container dashboard">
       <NavbarAdmin />
       <h2>Produtos</h2>
+      <ProductForm onEdit={onEdit} setOnEdit={setOnEdit} getProducts={getProducts} />
       <ProductTable setOnEdit={setOnEdit} products={products} setProducts={setProducts} />
     </section>
   );

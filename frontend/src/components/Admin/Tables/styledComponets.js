@@ -58,6 +58,14 @@ export const Input = styled.input`
   height: 40px;
 `;
 
+export const Select = styled.select`
+  width: 120px;
+  padding: 0 10px;
+  border: 1px solid #bbb;
+  border-radius: 5px;
+  height: 40px;
+`;
+
 export const Label = styled.label``;
 
 export const Button = styled.button`
