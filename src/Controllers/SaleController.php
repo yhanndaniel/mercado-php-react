@@ -33,10 +33,11 @@ class SaleController
         $sale = new Sale();
         $sale->fill($saleReceived);
 
-        $this->saleRepository->create($sale);
+        $id = $this->saleRepository->create($sale);
 
         Json::render([
             'message' => 'Sale created',
+            'id' => $id
         ], 201);
     }
 

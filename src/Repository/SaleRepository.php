@@ -35,9 +35,9 @@ class SaleRepository implements RepositoryInterface
         return $this->select->query(self::TABLE_NAME)->where('id', '=', $id)->first(self::CLASS_NAME);
     }
 
-    public function create($sale) : ?bool
+    public function create($sale) : ?int
     {
-        return $this->create->create(self::TABLE_NAME, $sale->toArray())->execute();
+        return $this->create->create(self::TABLE_NAME, $sale->toArray())->executeAndReturnId();
     }
 
     public function update($sale)

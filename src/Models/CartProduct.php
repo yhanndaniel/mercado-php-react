@@ -111,7 +111,7 @@ class CartProduct implements JsonSerializable
         $this->updated_at = $updated_at;
     }
 
-    public function toArrary(): array
+    public function toArray(): array
     {
         $this->created_at ??= Helpers::now();
         $this->updated_at ??= Helpers::now();

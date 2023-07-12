@@ -24,6 +24,14 @@ class Create
         return $rs->execute($this->data);
     }
 
+    public function executeAndReturnId()
+    {
+        $connection = DatabaseConnection::open();
+        $rs = $connection->prepare($this->sql);
+        $rs->execute($this->data);
+        return $connection->lastInsertId();
+    }
+
     public function getSql()
     {
         return $this->sql;

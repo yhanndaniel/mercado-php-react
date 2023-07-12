@@ -5,6 +5,8 @@ import CartItem from '../CartItem/CartItem';
 import AppContext from '../../context/AppContext';
 import formatCurrency from '../../utils/formatCurrency';
 import { BsFillBagCheckFill, BsFillBagXFill } from 'react-icons/bs';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 function Cart() {
   const { cartItems, isCartVisible, setCartItems } = useContext(AppContext);
@@ -17,8 +19,34 @@ function Cart() {
     setCartItems([]);
   }
 
-  const handleBuyCart = () => {
-    console.log(cartItems);
+  const handleBuyCart = async () => {
+    await axios
+        .post("http://localhost:8000/api/sale/", {
+          total_amount: subTotalPrice,
+          total_tax: taxTotalPrice,
+          total: totalPrice,
+          saled: 1,
+        })
+        .then(({ data }) => {
+          cartItems.forEach(async element => {
+              console.log(element);
+              await axios.post("http://localhost:8000/api/cart-product/", {
+                products_id: element.id,
+                cart_id: data.id,
+                quantity: element.qtd,
+                total_amount: element.qtd*element.price,
+                total_tax: element.qtd*element.taxCalculated,
+                total: element.qtd*element.price + element.qtd*element.taxCalculated,
+              }).then(({ data }) => {
+                toast.success("Compra realizada!!!");
+                setCartItems([]);
+              }).catch(({ data }) => {
+                toast.error(data)
+                setCartItems([]);
+              });
+          });
+        })
+        .catch(({ data }) => toast.error(data));
   }
 
   return (
