@@ -39,7 +39,7 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 ## 💻 Projeto
 
 Um MVP de Loja Feita com PHP puro + React.
-Para Rodar o Projeto é necessário rodar os seguintes comandos:
+Para Rodar o Projeto é necessário restaurar o backup do banco de dados rodar os seguintes comandos:
 
 ```
 composer install
