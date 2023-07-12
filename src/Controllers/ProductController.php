@@ -17,8 +17,6 @@ class ProductController
     public function index()
     {
         $products = $this->productRepository->getAll();
-        // var_dump($products);
-        // die();
         Json::render($products, 200);
     }
 

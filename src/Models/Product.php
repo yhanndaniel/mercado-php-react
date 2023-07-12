@@ -27,6 +27,7 @@ class Product implements JsonSerializable
         $productTypeRepository = $container->get(ProductTypeRepository::class);
         if (isset($this->product_types_id)) {
             $productType = $productTypeRepository->getById($this->product_types_id);
+            $this->image = 'https://placehold.co/236';
             $this->productType = $productType->getName();
         }
     }

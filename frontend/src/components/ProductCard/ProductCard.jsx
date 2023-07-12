@@ -7,7 +7,7 @@ import formatCurrency from '../../utils/formatCurrency';
 import AppContext from '../../context/AppContext';
 
 function ProductCard({ data }) {
-  const { title, thumbnail, price } = data;
+  const { name, image, price } = data;
 
   const { cartItems, setCartItems } = useContext(AppContext);
 
@@ -17,14 +17,14 @@ function ProductCard({ data }) {
     <section className="product-card">
       
       <img
-        src={thumbnail.replace(/\w\.jpg/gi, 'W.jpg')}
+        src={image.replace(/\w\.jpg/gi, 'W.jpg')}
         alt="product"
         className="card__image"
       />
 
       <div className="card__infos">
         <h2 className="card__price">{formatCurrency(price, 'BRL')}</h2>
-        <h2 className="card__title">{title}</h2>
+        <h2 className="card__title">{name}</h2>
       </div>
 
       <button
