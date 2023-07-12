@@ -3,6 +3,7 @@ import axios from "axios";
 import { FaTrash, FaEdit } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { Table, Thead, Tbody, Tr, Th, Td } from "./styledComponets";
+import formatCurrency from "../../../utils/formatCurrency";
 const ProductTable = ({ products, setProducts, setOnEdit }) => {
 
   const handleEdit = (item) => {
@@ -41,7 +42,7 @@ const ProductTable = ({ products, setProducts, setOnEdit }) => {
             <Td width="20%">{item.name}</Td>
             <Td width="30%">{item.description}</Td>
             <Td width="20%">
-              {item.price}
+              {formatCurrency(item.price, 'BRL')}
             </Td>
             <Td width="20%">
               {item.productType}

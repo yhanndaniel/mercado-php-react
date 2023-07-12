@@ -30,9 +30,9 @@ class CartProductRepository implements RepositoryInterface
         return $this->select->query(self::TABLE_NAME)->get(self::CLASS_NAME);
     }
 
-    public function getById($id) : ?CartProduct
+    public function getById($id) : array
     {
-        return $this->select->query(self::TABLE_NAME)->where('id', '=', $id)->first(self::CLASS_NAME);
+        return $this->select->query(self::TABLE_NAME)->where('cart_id', '=', $id)->get(self::CLASS_NAME);
     }
 
     public function create($cartProduct) : ?bool

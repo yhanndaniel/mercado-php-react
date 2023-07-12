@@ -2,6 +2,9 @@
 namespace App\Models;
 
 use App\Helpers\Helpers;
+use App\Repository\ProductRepository;
+use DI\Container;
+use DI\ContainerBuilder;
 use JsonSerializable;
 use stdClass;
 
@@ -15,6 +18,20 @@ class CartProduct implements JsonSerializable
     private float $total;
     private ?string $created_at;
     private ?string $updated_at;
+    private ?string $productName;
+
+    public function __construct()
+    {
+        $container = new Container();
+        $builder = new ContainerBuilder();
+        $container = $builder->build();
+        $productRepository = $container->get(ProductRepository::class);
+        if (isset($this->products_id)) {
+            $product = $productRepository->getById($this->products_id);
+            $this->productName = $product->getName();
+        }
+        
+    }
 
     public function jsonSerialize(): mixed
     {

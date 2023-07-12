@@ -22,8 +22,8 @@ class CartProductController
 
     public function show($id)
     {
-        $cartProduct = $this->cartProductRepository->getById($id);
-        Json::render($cartProduct->toArray(), 200);
+        $cartProducts = $this->cartProductRepository->getById($id);
+        Json::render($cartProducts, 200);
     }
 
     public function create()
@@ -42,12 +42,7 @@ class CartProductController
 
     public function update($id)
     {
-        $cartProduct = $this->cartProductRepository->getById($id);
-        $json = file_get_contents('php://input');
-        $cartProductReceived = json_decode($json);
-        $cartProduct->fill($cartProductReceived);
-
-        $this->cartProductRepository->update($cartProduct);
+        
 
         Json::render([
             'message' => 'Cart product updated',
