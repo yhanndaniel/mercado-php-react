@@ -4,14 +4,14 @@
 
 <p align="center">
 
-  <img alt="Repository size" src="https://img.shields.io/github/languages/count/yhanndaniel/crud-laravel-vue">
+  <img alt="Repository size" src="https://img.shields.io/github/languages/count/yhanndaniel/mercado-php-react">
   
-  <a href="https://github.com/yhanndaniel/mercado-php-react/commits/master">
-    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/yhanndaniel/crud-laravel-vue">
+  <a href="https://github.com/yhanndaniel/mercado-php-react/commits/main">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/yhanndaniel/mercado-php-react">
   </a>
 
   <a href="https://github.com/yhanndaniel/mercado-php-react/issues">
-    <img alt="Repository issues" src="https://img.shields.io/github/issues/yhanndaniel/crud-laravel-vue">
+    <img alt="Repository issues" src="https://img.shields.io/github/issues/yhanndaniel/mercado-php-react">
   </a>
 
   <img alt="License" src="https://img.shields.io/badge/license-MIT-brightgreen">
